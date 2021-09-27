@@ -12,22 +12,57 @@
 </head>
 <body>
      <header>
-          <h1>jlpt-webapp</h1>
+          <hgroup class="headerbarBranding" itemscope="" itemtype="https://schema.org/Organization">
+              <h1 class="headerbarBranding__logoSlogan">
+                   <a href="/" title="titre H1" itemprop="url">
+                         <img src="assets/logo.png" alt="logo de (la dite marque)" itemprop="logo">
+                         <strong>jlpt-webapp</strong>
+                    </a>
+               </h1>
+              <h2 class="headerbarBranding__problematique">
+                   titre Hn(problématique/slogan)
+                   <strong>
+                        <a href="">expression-clé</a>
+                        <button class="headerbarBranding__carteVisite-buttonToggle">
+                             X<i class="iconCarteVisiteATrouverxdxdxd"></i>
+                         </button>
+                    </strong>
+               </h2>
+          </hgroup>
+          <nav class="searchbox">
+               <ul class="searchbox__categories --linksH2">
+                    <li>
+                         <h2>titres menu principal</h2>
+                    </li>
+                    <li>
+                         <h2>titres 2</h2>
+                    </li>
+                    <li>
+                         <h2>titres 33</h2>
+                    </li>
+               </ul>
+               <form class="searchbox__form" action="">
+                    <fieldset>
+                         <label for="search">search for a kanji, ...</label>
+                         <input type="text" id="search" placeholder="search for a kanji, ...">
+                         <i class="searchIcon"></i>
+                    </fieldset>
+               </form>
+          </nav>
+
      </header>
-     <nav>
-          <ul>
-               <li></li>
-               <li></li>
-               <li></li>
-          </ul>
-          <hr>
-          <form action="">
-               <input type="text">
-               <input type="text">
-               <input type="submit">
-          </form>
-     </nav>
-     <main id="main"></main>
+     <main id="main">
+          <!-- nav.resultsList>form+section>ul>li.bigger+li>span.kanji_nav+(.kata>span)+(.details>span)+button.hira -->
+          <nav class="resultsList">
+               <form action=""></form>
+               <section>
+               </section>
+          </nav>
+          <!-- <nav class="resultsList">
+               <div><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+               <div><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+          </nav> -->
+     </main>
      <aside>
           <select name="" id="">
                <option value="json" selected>fichier json</option>
@@ -46,5 +81,7 @@
      </aside>
      <footer></footer>
 </body>
+<script src="js/jquery.js"></script>
+
 <script src="script.js"></script>
 </html>
