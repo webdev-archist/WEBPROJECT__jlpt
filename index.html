@@ -5,13 +5,48 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title>jlpt-webapp</title>
      <link rel="stylesheet" href="build/style.css">
-     <script src="data.js"></script>
+     <script src="./json/data.js"></script>
+     <script src="./json/bunkajp_extractedDatas.js"></script>
+     <script src="./json/thekanjimap_extractedDatas.js"></script>
+     <script src="./json/bunkajp_plus.js"></script>
+     <script src="json/sanitaze/kanji.js"></script>
+     <script src="json/sanitaze/jukugo.js"></script>
+     <script src="json/sanitaze/kanjidic.js"></script>
+     <script src="json/sanitaze/radicals.js"></script>
+     
+     
+     
+     <script src="js/jquery.js"></script>
+     <script type="text/javascript" charset="utf-8">
+          jQuery = $
+          $(document).ready(function() {
+               $('#urlist').dataTable( {
+               "bPaginate": false,
+               "bLengthChange": false,
+               "bFilter": true,
+               "bSort": false,
+               "bInfo": false,
+               "bAutoWidth": false,
+               "aoColumnDefs": [ 
+                    { "sWidth": "20%", "bSearchable": false, "aTargets": [ 0 ] },
+                    { "sWidth": "30%", "bSearchable": false, "aTargets": [ 2 ] },
+                    { "sWidth": "33%", "bSearchable": false, "aTargets": [ 3 ] }
+               ]
+               } );
+          } );
+     </script>
+     <script type="text/javascript" src="./kanji-kensaku/jquery.dataTables.js"></script>
      <style>
           hr{width:100%;}
      </style>
 </head>
 <body>
      <header>
+          <div class="temp">
+               <p><a href="bunkaJp.html" target="_blank">bunka.jp</a></p>
+               <p><a href="thekanjimap/index.html" target="_blank">thekanjimap</a></p>
+               <p><a href="http://kanjidamage.com" target="_blank">kanjidamage</a></p>
+          </div>
           <hgroup class="headerbarBranding" itemscope="" itemtype="https://schema.org/Organization">
               <h1 class="headerbarBranding__logoSlogan">
                    <a href="/" title="titre H1" itemprop="url">
@@ -29,34 +64,81 @@
                     </strong>
                </h2>
           </hgroup>
-          <nav class="searchbox">
-               <ul class="searchbox__categories --linksH2">
-                    <li>
-                         <h2>titres menu principal</h2>
-                    </li>
-                    <li>
-                         <h2>titres 2</h2>
-                    </li>
-                    <li>
-                         <h2>titres 33</h2>
-                    </li>
-               </ul>
-               <form class="searchbox__form" action="">
-                    <fieldset>
-                         <label for="search">search for a kanji, ...</label>
-                         <input type="text" id="search" placeholder="search for a kanji, ...">
-                         <i class="searchIcon"></i>
-                    </fieldset>
-               </form>
-          </nav>
 
+          <!-- menu>(li>a{icon})*3 -->
+          <menu>
+               <li><a href="">icon</a></li>
+               <li><a href="">icon</a></li>
+               <li><a href="">icon</a></li>
+          </menu>
+          
      </header>
+     <nav class="searchbox">
+          <!-- form>(fieldset>label{音・訓の検索：}+(select>option)+input#input_search)+ul#searchResuls -->
+          <form class="searchbox__form" action="#" onsubmit="return false">
+               <fieldset>
+                    <label for="searchKanjiInput">音・訓の検索：</label>
+                    <select name="searchKanjiSelect" id="searchKanjiSelect">
+                         <option value="">。。。探す・Rechercher...</option>
+                         <option value="kata">片仮名・カタカナ</option>
+                         <option value="hira">平仮名・ひらがな</option>
+                         <option value="radical">部首・ぶしゅ</option>
+                         <option value="source">原</option>
+                         <option value="jukugo">熟語・じゅくご</option>
+                         <option value="jlpt" class="menu">JLPT　kanji・漢字</option>
+                         <option value="jouyou" class="menu">jouyou・常用漢字</option>
+                         <option value="gairaigo">外来語・がいらいご</option>
+                         <option value="...">。。。</option>
+                    </select>
+                    <input name="searchKanjiInput"type="text" id="searchKanjiInput">
+               </fieldset>
+          </form>
+          <ul class="searchbox__results" id="searchResuls"></ul>
+     </nav>
      <main id="main">
+          <!-- 
+               les section>h2 et section>ul sont à refaire en emmet ci-dessous
+               article.kanjiResult>(header>(h1.kanji_main>img)+(h2.onyomi{onyomi}>span)+(h2.radical{radical}>span))+(ul.details>li>strong{koimettre?})+section.hira>h2.hira{訓読み}+(ul.kunYomiList>li>span.kunyomi)+h2.goi{vocabulaire}+(ul.vocabList>li>span.matchedWords)+ul.kunyomi+ul.more>li>h3{???}+p{???} -->
+          <article class="kanjiResult">
+               <header>
+                    <h1 class="kanji_main"><img src="" alt=""></h1>
+                    <h2 class="onyomi">onyomi<span></span></h2>
+                    <h2 class="radical">radical<span></span></h2>
+               </header>
+               <ul class="details">
+                    <li><strong>koimettre?</strong></li>
+               </ul>
+               <section class="hira">
+                    <h2 class="kata" title="おんよみ・{{lecture on}}・カタカナ（？漢字で？）">音読み</h2>
+                    <ul class="onYomiList">
+                         <li><span class="onyomi"></span></li>
+                    </ul>
+                    <h2 class="hira" title="くんよみ・{{lecture kun}}・ひらがな（平仮名）">訓読み</h2>
+                    <ul class="kunYomiList">
+                         <li><span class="kunyomi"></span></li>
+                    </ul>
+                    <h2 class="goi" title="ごい・{{vocabulaire}}・じゅうけいしょ（？？？）">語彙</h2>
+                    <ul class="vocabList">vocabulary list
+                         <li><span class="matchedWords"></span></li>
+                    </ul>
+                    <ul class="kunyomi"></ul>
+                    <ul class="more">
+                         <li>
+                              <h3>???</h3>
+                              <p>???</p>
+                         </li>
+                    </ul>
+               </section>
+          </article>
           <!-- nav.resultsList>form+section>ul>li.bigger+li>span.kanji_nav+(.kata>span)+(.details>span)+button.hira -->
           <nav class="resultsList">
-               <form action=""></form>
                <section>
                </section>
+               <form action="">
+                    <input id="absisse" type="range" min='1' max='5'>
+                    <input id="ordonnee" type="range" min='1' max='5'>
+                    <input type="color" value="#FF0000">
+               </form>
           </nav>
           <!-- <nav class="resultsList">
                <div><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
@@ -69,7 +151,7 @@
                <option value="cjs">fichier cjs</option>
 
           </select>
-          <hr>
+          <!-- <hr> -->
           <div id="selctedfileView"></div>
      </aside>
      <aside>
@@ -81,7 +163,10 @@
      </aside>
      <footer></footer>
 </body>
-<script src="js/jquery.js"></script>
 
+<script type="module" src="kanjiLib__module.js"></script>
+<script src="kanjiLib.js"></script>
+<script src="functionalDom.js"></script>
+<script src="events.js"></script>
 <script src="script.js"></script>
 </html>

@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
      DD SOME TRAITMENTS HERE WITH nodejs's package for instance
      THIS FILE WOULD BE IMPORTED FROM style.scss TO build/style.css
@@ -357,6 +358,105 @@ ul {
 /**/
 /**/
 /**/
+nav.searchbox {
+  width: 15%;
+  height: 80%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+nav.searchbox.z-1 {
+  z-index: -1;
+}
+nav.searchbox > form.searchbox__form {
+  width: 100%;
+  height: 15%;
+  position: absolute;
+  bottom: 0;
+  background: red;
+}
+nav.searchbox > form.searchbox__form > fieldset {
+  padding: 0;
+  margin: 0;
+  border-top: solid;
+  box-shadow: 0 0 10px 0.1px;
+}
+nav.searchbox > form.searchbox__form > fieldset > * {
+  width: 100%;
+  height: 1.3em;
+}
+nav.searchbox > form.searchbox__form > fieldset > label {
+  text-align: center;
+  display: block;
+}
+nav.searchbox > form.searchbox__form > fieldset > select {
+  position: absolute;
+}
+nav.searchbox > form.searchbox__form > fieldset > input#searchKanjiInput {
+  text-align: center;
+  font-weight: bolder;
+  position: relative;
+  width: 89%;
+}
+nav.searchbox > ul.searchbox__results {
+  box-sizing: border-box;
+  position: absolute;
+  display: flex;
+  flex-flow: column-reverse;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 85%;
+  background: rgba(111, 111, 111, 0.9);
+  border: 1px dotted;
+  border-bottom: none !important;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 0.1px goldenrod inset;
+  transition: border-width 0.1s, box-shadow 0.2s;
+}
+nav.searchbox > ul.searchbox__results:before {
+  content: "結果・Results";
+  font-size: 2rem;
+  position: absolute;
+  top: 25%;
+  left: -25%;
+  opacity: 0.25;
+  transform: rotate(-45deg);
+  width: 200%;
+  color: red;
+  text-shadow: 0 0 55px white, 0 0 1px black, 0 0 3px black, 0 0 5px black;
+  transition: opacity 0.4s, font-size 0.2s;
+}
+nav.searchbox > ul.searchbox__results:hover {
+  border: solid goldenrod;
+  box-shadow: 0 0 10px 1px inset;
+}
+nav.searchbox > ul.searchbox__results:hover:before {
+  opacity: 0;
+  font-size: 4em;
+}
+nav.searchbox > ul.searchbox__results:hover > li {
+  opacity: 1;
+  box-shadow: 0px -5px 10px 1px black inset, 0px -5px 10px 1px #fff44194 inset;
+}
+nav.searchbox > ul.searchbox__results > li {
+  box-shadow: 0px -5px 10px 1px #fff44194 inset;
+  text-align: center;
+  background: rgba(10, 50, 100, 0.5);
+  border-bottom: solid;
+  font-size: 2em;
+  opacity: 0.4;
+  transition: color 0.3s, text-shadow 0.7s;
+  cursor: pointer;
+}
+nav.searchbox > ul.searchbox__results > li:hover {
+  border-color: goldenrod;
+  text-shadow: 0 0 7px yellow;
+  font-weight: 100;
+  color: yellow;
+  box-shadow: 0px -5px 10px 1px #fff44194 inset, 0px -5px 10px 1px black inset;
+}
+
 /**/
 /* ooo */
 /**/
@@ -376,8 +476,96 @@ ul {
 }
 
 /***********************************/
-body > header {
-  width: 15%;
+body nav.searchbox {
+  /*
+  ul.searchbox__categories{display:none;
+    li{padding:.83em 0;text-align:center;
+      height:55px;box-sizing: border-box;
+      overflow: hidden;border-bottom: solid;
+      transition: background .4s;
+      &:hover{overflow:visible;background:green;}
+      >h2{
+        margin:0;
+        >strong{
+          a{
+            img{
+
+            }
+          }
+        }
+      }
+    }
+  }
+  form.searchbox__form{height:93%;overflow:scroll;
+    width: 100%;
+    background: dodgerblue;
+    box-sizing: border-box;
+    >.dataTables_wrapper{
+      >label{
+        display: flex;
+        flex-flow: column;
+        height: 50px;
+        >i{text-align: center;font-weight:lighter;}
+        >input{
+
+          &#bunkjpSearchInput{
+                // CHANGE THE "ID" OF THIS INPUT HERE=>
+                // /home/mirai/Bureau/WEBPROJECTS/WEBPROJECT__jlpt/kanji-kensaku/jquery.dataTables.js
+                // OR MAYBE THERE ^^ =>
+                // /home/mirai/Bureau/WEBPROJECTS/WEBPROJECT__jlpt/js/jquery.dataTables.js
+          }
+        }
+      }
+      >.dataTables_filter{
+        height: 10%;
+        width: calc(100% - 3px);
+        position: absolute;
+        bottom: 0;
+        z-index: 99;
+        background: red;
+        border:solid goldenrod;
+        border-right-width: 0;
+        >label{
+          display: flex;
+          flex-flow: column;
+          height: 50px;
+          >i{text-align:center;font-weight: lighter;}
+        }
+      }
+      >table#urlist tr{
+        >th:first-of-type, >td:first-of-type {
+          text-align: center;
+          transition: all .3s;
+          cursor:pointer;
+          &:hover{background:silver;border:solid gold;}
+          &:active{background:red;}
+        }
+        >th~th, >td~td {
+          display: none;
+        }
+      }
+    }
+    >fieldset{
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      box-sizing: border-box;
+      label{display:none;}
+      input{
+        width:100%;
+      }
+      i.searchIcon{
+        width: 30px;
+        background: rebeccapurple;
+        display: block;
+        position: absolute;
+        top: 10%;
+        right: 0;
+        bottom: 10%;
+      }
+    }
+  }
+  */
 }
 /***********************************/
 /***********************************/
@@ -386,8 +574,12 @@ body > header {
 /***********************************/
 /************layouts****************/
 @media only screen and (min-width: 1000px) {
+  .off {
+    display: none !important;
+  }
+
   body {
-    padding-left: calc(15% + 5px);
+    padding-left: 15%;
   }
   body > header {
     width: 15%;
@@ -400,109 +592,291 @@ body > header {
     background: rgba(192, 28, 28, 0.4);
     box-shadow: 0 0 5px 0.1px;
   }
-  body > header hgroup h1 {
+  body > header > .temp {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: red;
+    height: 10px;
+    overflow: hidden;
+  }
+  body > header > .temp:hover {
+    height: auto !important;
+  }
+  body > header > hgroup {
+    height: 20%;
+    box-shadow: 0 0 10px 1px inset;
+  }
+  body > header > hgroup h1 {
     border-bottom: solid;
     margin: 0;
   }
-  body > header hgroup h1 a img {
+  body > header > hgroup h1 a img {
     width: 75px;
     height: 75px !important;
     border: solid;
     margin: 0 auto;
     display: block;
   }
-  body > header hgroup h1 a strong {
+  body > header > hgroup h1 a strong {
     text-align: center;
     display: block;
     font-size: 1.5rem;
     border-bottom: solid;
   }
-  body > header hgroup h2 {
+  body > header > hgroup h2 {
     margin: 0;
     width: 500px;
     position: relative;
     border-bottom: solid;
   }
-  body > header hgroup h2 strong button {
+  body > header > hgroup h2 strong button {
     position: absolute;
     top: 1rem;
     left: 0;
   }
-  body > header nav.searchbox {
+  body > header > menu {
     position: absolute;
-    bottom: 0;
-    left: 0;
-  }
-  body > header nav.searchbox ul.searchbox__categories li {
-    padding: 0.83em 0;
-    text-align: center;
-    height: 55px;
-    box-sizing: border-box;
-    overflow: hidden;
-    border-bottom: solid;
-    transition: background 0.4s;
-  }
-  body > header nav.searchbox ul.searchbox__categories li:hover {
-    overflow: visible;
-    background: green;
-  }
-  body > header nav.searchbox ul.searchbox__categories li > h2 {
-    margin: 0;
-  }
-  body > header nav.searchbox form.searchbox__form {
-    width: 100%;
-    background: dodgerblue;
-    box-sizing: border-box;
-  }
-  body > header nav.searchbox form.searchbox__form fieldset {
-    position: relative;
-  }
-  body > header nav.searchbox form.searchbox__form fieldset label {
-    display: none;
-  }
-  body > header nav.searchbox form.searchbox__form fieldset input {
-    width: 100%;
-  }
-  body > header nav.searchbox form.searchbox__form fieldset i.searchIcon {
-    width: 30px;
-    background: rebeccapurple;
-    display: block;
-    position: absolute;
-    top: 10%;
     right: 0;
-    bottom: 10%;
+    top: 30%;
+    bottom: 30%;
+    width: 10%;
+    transition: width 0.4s;
   }
-  body main nav.resultsList > section > ul > li, body main nav.resultsList > section > ul li.bigger {
-    width: 100px;
-    height: 100px;
+  body > header > menu:hover {
+    width: 50%;
+  }
+  body main {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 85%;
+    border-left: solid gold;
+  }
+  body main > * {
+    width: 87.5%;
+    height: 100%;
+  }
+  body main article.kanjiResult header h1 {
+    margin-top: 0;
+  }
+  body main article.kanjiResult section {
+    background: silver;
+    overflow: scroll;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    top: 0;
+    width: 12.5%;
+    padding: 0.5em;
+    box-sizing: border-box;
+  }
+  body main article.kanjiResult section h2 {
+    border-bottom: solid;
+    text-align: center;
+    margin: 0 -8px;
+  }
+  body main nav.resultsList {
+    border-right: solid red;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: whitesmoke;
+    box-shadow: 0 0 5px 0.1px;
+  }
+  body main nav.resultsList > form {
+    position: absolute;
+    top: 0;
+    background: purple;
+    width: 50%;
+    left: 1em;
+    height: 5%;
+    border-bottom: solid;
+  }
+  body main nav.resultsList > section {
+    display: flex;
+    align-items: end;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+  }
+  body main nav.resultsList > section > ul {
+    background: red;
+    display: flex;
+    width: 100%;
+    box-shadow: 0 0 10px 1px inset, 0 0 3px 0.5px;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+    padding-top: 3rem;
+  }
+  body main nav.resultsList > section > ul > li {
     border: solid;
+    box-sizing: border-box;
+  }
+  body main nav.resultsList > section > ul > li:not(.bigger) {
+    transition: bottom 0.4s;
+    position: relative;
+    margin-right: 3rem;
+    bottom: 0;
+  }
+  body main nav.resultsList > section > ul > li:not(.bigger):hover {
+    bottom: 1em;
+  }
+  body main nav.resultsList > section > ul > li:not(.bigger):hover div[class$=Bis] {
+    opacity: 1;
+    z-index: 1;
+  }
+  body main nav.resultsList > section > ul > li.bigger {
+    opacity: 0;
+    position: absolute;
+    top: 1rem;
+    right: 3px;
+    width: 300px;
+    height: 300px;
+    box-shadow: 0 0 3px 0.1px;
+    background: silver;
+    transition: opacity 0.2s;
+  }
+  body main nav.resultsList > section > ul > li.bigger.on {
+    opacity: 1;
+  }
+  body main nav.resultsList > section > ul > li.bigger > span.kanji_nav {
+    font-size: 18rem !important;
+  }
+  body main nav.resultsList > section > ul > li > span.kanji_nav {
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0 0 10px 1px;
+    font-size: 100px;
+    display: inline-block;
+    height: 100%;
+    overflow: hidden;
+    background: gold;
+    transition: background 0.2s;
+  }
+  body main nav.resultsList > section > ul > li > span.kanji_nav:active {
+    background: pink;
+  }
+  body main nav.resultsList > section > ul > li div, body main nav.resultsList > section > ul > li button {
+    transition: opacity 0.4s;
+    position: absolute;
+    /*opacity:0;*/
+  }
+  body main nav.resultsList > section > ul > li > * {
+    opacity: 1;
+  }
+  body main nav.resultsList > section > ul > li > div > span {
     position: relative;
   }
-  body main nav.resultsList > section > ul > li > span.kanji_nav, body main nav.resultsList > section > ul li.bigger > span.kanji_nav {
-    font-size: 100px;
+  body main nav.resultsList > section > ul > li > div.kata {
+    top: -1.25rem;
+    left: 0;
+    background: green;
+    width: 100%;
   }
-  body main nav.resultsList > section > ul > li > div > span, body main nav.resultsList > section > ul li.bigger > div > span {
+  body main nav.resultsList > section > ul > li > div.kata > span {
     border-right: solid;
   }
-  body main nav.resultsList > section > ul > li > div.kata, body main nav.resultsList > section > ul li.bigger > div.kata {
-    position: absolute;
-    top: -10%;
-    left: 0;
-    background: green;
-    width: 100%;
-  }
-  body main nav.resultsList > section > ul > li > div.details, body main nav.resultsList > section > ul li.bigger > div.details {
-    position: absolute;
-    top: -10%;
-    right: -10%;
+  body main nav.resultsList > section > ul > li > div.details {
+    top: 0%;
+    right: -1rem;
     background: blue;
     bottom: 0;
-    width: 10%;
+    width: 15%;
   }
-  body main nav.resultsList > section > ul > li > button.hira, body main nav.resultsList > section > ul li.bigger > button.hira {
+  body main nav.resultsList > section > ul > li > div.details > span {
+    border-right: solid;
+    border-right: solid;
+    border-bottom: solid;
+    display: inline-block;
+    margin-bottom: 5px;
+  }
+  body main nav.resultsList > section > ul > li > div.kataBis, body main nav.resultsList > section > ul > li > div.detailsBis {
     position: absolute;
-    right: -10%;
-    bottom: -10%;
+    left: 0;
+    right: 0;
+    background: rgba(111, 111, 111, 0.9);
+    text-align: center;
+  }
+  body main nav.resultsList > section > ul > li > div.kataBis > span, body main nav.resultsList > section > ul > li > div.detailsBis > span {
+    border: solid;
+  }
+  body main nav.resultsList > section > ul > li > div.kataBis {
+    top: 0;
+    bottom: 50%;
+    border-bottom: solid red;
+  }
+  body main nav.resultsList > section > ul > li > div.detailsBis {
+    top: 50%;
+    bottom: 0%;
+    border-top: solid;
+  }
+  body main nav.resultsList > section > ul > li > div:not(div[class$=Bis]) > span:before {
+    font-size: 0.3em;
+    display: block;
+    text-align: center;
+    color: red;
+    border-bottom: solid;
+    background: white;
+    margin: 0 -5px;
+  }
+  body main nav.resultsList > section > ul > li > div > .jlpt:before {
+    content: "jlpt";
+  }
+  body main nav.resultsList > section > ul > li > div > .jouyou:before {
+    content: "jouyou";
+  }
+  body main nav.resultsList > section > ul > li > div > .radical:before {
+    content: "radical";
+  }
+  body main nav.resultsList > section > ul > li > div > .radical i {
+    position: absolute;
+    top: 5px;
+    right: -15px;
+    border-radius: 1em;
+    border: solid black;
+    width: 10px;
+    height: 10px;
+    font-size: 0.5em;
+    text-align: center;
+    background: white;
+    color: red;
+    font-weight: 900;
+  }
+  body main nav.resultsList > section > ul > li > div[class$=Bis] {
+    opacity: 0;
+    z-index: -1;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  body main nav.resultsList > section > ul > li > div[class$=Bis] > span {
+    height: 30px;
+    width: 30px;
+  }
+  body main nav.resultsList > section > ul > li > div[class$=Bis] > span.radical > span {
+    border-bottom: solid red;
+    background: white;
+  }
+  body main nav.resultsList > section > ul > li > div[class$=Bis] > span:before {
+    position: absolute;
+    top: -2em;
+    left: 0;
+    font-size: 0.5em;
+    width: 100%;
+    height: 15px;
+    line-height: 1rem;
+    border-bottom: solid red;
+    text-align: center;
+    background: white;
+    padding: 0.1em;
+    box-sizing: border-box;
+  }
+  body main nav.resultsList > section > ul > li > button.hira {
+    line-height: 15px;
+    left: 100%;
+    bottom: 0%;
     border: unset;
   }
 }
