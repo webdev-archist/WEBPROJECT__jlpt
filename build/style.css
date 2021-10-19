@@ -440,6 +440,7 @@ nav.searchbox > ul.searchbox__results:hover > li {
   box-shadow: 0px -5px 10px 1px black inset, 0px -5px 10px 1px #fff44194 inset;
 }
 nav.searchbox > ul.searchbox__results > li {
+  z-index: 1;
   box-shadow: 0px -5px 10px 1px #fff44194 inset;
   text-align: center;
   background: rgba(10, 50, 100, 0.5);
@@ -677,6 +678,91 @@ body nav.searchbox {
     text-align: center;
     margin: 0 -8px;
   }
+  body main article.kanjiResult section ul > li span {
+    margin-right: 0.5rem;
+    border-right: solid red;
+    background: gold;
+    box-shadow: 0 0 2px 1px;
+  }
+  body main article.kanjiResult section ul.vocabList > figure {
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    position: relative;
+    flex-flow: wrap-reverse;
+    background: navajowhite;
+    margin-bottom: 1em;
+    padding: 0.1rem;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > cite {
+    display: block;
+    width: 85%;
+    text-align: center;
+    position: relative;
+    background: whitesmoke;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > cite > em {
+    font-size: 1.5em;
+    position: relative;
+    z-index: 2;
+    text-shadow: 0 0 2px gold, 0 0 2px red;
+    line-height: 2em;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > cite > span {
+    top: -4px;
+    left: 0;
+    position: absolute;
+    border-radius: 3px;
+    padding: 0.2em 0.5em;
+    font-size: 0.5em;
+    color: red;
+    text-shadow: 0 0 1px gold, 0 0 1px black;
+    background: white;
+    box-shadow: 0 0 3px 0.1px inset black;
+    border: 1px solid;
+    z-index: 0;
+    display: inline-block;
+    width: 50%;
+    left: 25%;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > ul {
+    position: absolute;
+    display: flex;
+    flex-flow: column;
+    right: 0;
+    width: 15%;
+    background: red;
+    top: 25%;
+    bottom: 0%;
+    border-left: solid;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > ul > li {
+    border: solid;
+    border-width: 1px 0 1px 0;
+    height: 25%;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > figcaption {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    overflow-y: hidden;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > figcaption:hover {
+    overflow-x: scroll;
+    text-overflow: unset;
+    box-shadow: 0 0 3px 1px inset;
+    height: 1.5em;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > figcaption > em {
+    padding: 0.2em;
+    box-shadow: 0 0 3px 0.1px;
+    white-space: nowrap;
+  }
+  body main article.kanjiResult section ul.vocabList > figure > figcaption > em:not(last-of-type) {
+    margin-right: 0.5em;
+    border-right: solid brown;
+  }
   body main nav.resultsList {
     border-right: solid red;
     position: absolute;
@@ -727,6 +813,9 @@ body nav.searchbox {
     opacity: 1;
     z-index: 1;
   }
+  body main nav.resultsList > section > ul > li:not(.bigger) object {
+    display: none;
+  }
   body main nav.resultsList > section > ul > li.bigger {
     opacity: 0;
     position: absolute;
@@ -742,7 +831,14 @@ body nav.searchbox {
     opacity: 1;
   }
   body main nav.resultsList > section > ul > li.bigger > span.kanji_nav {
+    color: transparent;
     font-size: 18rem !important;
+  }
+  body main nav.resultsList > section > ul > li.bigger > span.kanji_nav object {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
   }
   body main nav.resultsList > section > ul > li > span.kanji_nav {
     cursor: pointer;

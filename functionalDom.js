@@ -5,8 +5,9 @@
    function setupnav_liResults($li, li){
         console.log(li);
         console.log(li._);
+        
         let li___ = output0[li._['kanji']]
-        $li  .append($('<span>').addClass('kanji_nav').html(li._['kanji']))
+        $li  .append($('<span>').addClass('kanji_nav').html(li._['kanji']).append($('<object>').attr('data', li._.strokes_image)))
              .on('click', liclick)
         $li.append($('<div>').addClass('kata').html(li___['kata'].map((i,j)=>$('<span>').html(i))))
 
@@ -56,27 +57,52 @@
 */
 
 
-    function getHiraLists($ul, obj){
-        $ul.append(
-            $('<li>')    .append($('<div>').html(obj.tkm.kun))
-                         .append($('<div>').html(obj.kun))
+    function getHiraHTML($ul, obj){
+        $ul.html("").append(
+            $('<li>').append($('<div>').html(obj.tkm.kun.map(e=>`<span>${e}</span>`)))
+                     .append($('<div>').html(obj.kun))
         )
 
     }
-    function getKataLists($ul, obj){
-        $ul.append(
-            $('<li>')    .append($('<div>').html(obj.tkm.on))
-                         .append($('<div>').html(obj.on))
+    function getKataHTML($ul, obj){
+        $ul.html("").append(
+            $('<li>').append($('<div>').html(obj.tkm.on.map(e=>`<span>${e}</span>`)))
+                     .append($('<div>').html(obj.on))
         )
 
     }
-    function getGoiLists($ul, obj){
-        $ul.append(
-            $('<li>').append($('<div>').html(JSON.stringify(obj.tkm.related_words)))
-        )
-
+    function getGoiHTML($ul, obj){
+          $ul.find('li').append($('<span>').html(obj.tkm.related_words.map(e=>e.kanjis)))
+          related_words2HTML($ul, obj)
     }
 
+    function related_words2HTML($ul, obj) {
+          $ul.append(
+               obj.tkm.related_words.map(e=>
+                    $('<figure/>')
+                         .append(
+                              $('<cite/>').append(e.kanjis.split('').map(e=>{
+                                   return $('<em/>').append(e)
+                              })).append(
+                                   $('<span/>').html(e.hira)
+                              )
+                         ).append(
+                              $('<ul/>').append(
+                                   $('<li/>').addClass('bushu')
+                                   .add($('<li/>').addClass('gen'))
+                                   .add($('<li/>').addClass('bunshou'))
+                              )
+                         ).append(
+                              $('<figcaption/>').append(
+                                   e.meaning.replace(' - ','').split(', ').map(e=>{
+                                        return $('<em/>').html(e)
+                                   })
+                              )
+                         )
+               )
+          )
+          return 
+    }
 /*
 ------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------

@@ -41,25 +41,27 @@ class SearchKanjiInput{
     }
 
     init(){
-      
         
 
         this.$tag.on('click', (e)=>{
                 // alert('ok')
-        }).on('focus', (e)=>{
-                // console.log('ok')
-        }).on('change', (e) => this.changeIt(e)
+        }).on('focus', (e)=>this.changeIt(e)
+        ).on('change', (e) => this.changeIt(e)
         ).on('blur', (e)=>{
                 // console.log('pas ok');
-        }).on("focus", (e)=>{
-                console.log('si mon contenu est vide, je supprime tous les');
-                console.log(e.target)
         })
+
+
+
+
+        this.tag.value = '守'
+        this.tag.focus()
     }
 
 
 
     changeIt = e => {
+        // alert('ok')
         this.new = true
         
         let value = e.target.value, tmp = []
@@ -80,7 +82,8 @@ class SearchKanjiInput{
         allKanjisInRequest= collectKanjis(value)
         console.log(allKanjisInRequest);
         allKanjisInRequest.map(kanji=>{
-            this.state.kanjis = this.state.kanjis[kanji] ? {...this.state.kanjis} : {...this.state.kanjis, [kanji]: finalObject[kanji] || "this kanji: '"+kanji+"' does not existe"}
+            let notfound = "this kanji: '"+kanji+"' does not existe"
+            this.state.kanjis = this.state.kanjis[kanji] ? {...this.state.kanjis} : {...this.state.kanjis, [kanji]: finalObject[kanji] || notfound}
         })
 
 
@@ -109,7 +112,10 @@ class SearchKanjiInput{
             console.log(radicalFilter);
 
 
-            $li.on('click', (e) => {this.searchResultClicked([this.state.kanjis[e.target.innerHTML]])})
+            $li.on('click', (e) => {
+                let ok = this.searchResultClicked([this.state.kanjis[e.target.innerHTML]])
+                // lihover(ok[0].querySelector('li'))
+            })
             this.$ul.append($li)
             console.log(this.$ul)
             console.log($li)
@@ -139,27 +145,25 @@ class SearchKanjiInput{
             li._ = sample1_,
             li.output0 = output0[li._.kanji],
             li.id = '_'+li._['id']
-            $li  .on('mouseover', lihover)
+            $li .on('mouseover', lihover)
                 .on("mouseout", liblur)
             // alert(li._)
 
             setupnav_liResults($li, li)
             setupnav_liResults_2($li, li)
 
+
             // $li.append($('<button>').addClass('hira hidden').html('ひら'))
 
-            this.sanitize_$uls($ul)
             $ul.append($li)
-
-            console.log(a);
-            console.log(sample1_);
-            console.log(kanjiObject[a]);
-            console.log(output0[li._.kanji]);
-            console.log("-----------\n\n\n");
+            
+            //FAIRE APPARAÎTRE LE li.bigger ET LA BARRE DES HIRAGANA DÈS QUE L'ON SÉLECTIONNE UN KANJI DANS LA LISTE DE GAUCHE
+            if(a==0)lihover(li)
         }
+        this.sanitize_$uls($ul)
         $ul.append($('<li/>').addClass('bigger'))
         $(main).find('>nav>section').append($ul)
-  
+        return $ul
     }
 
 

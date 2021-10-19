@@ -1,3 +1,5 @@
+document.body._ = {}
+
 // KANJIS OBJECT VARIABLE LIST:
 // final, output0, output01, output1, output11, bunkajpp, 
 // bunkajp, kanjidb, tkm, 
@@ -43,13 +45,16 @@ final = final.map(elt=>{
 console.log(final[210])
 console.log(notsource)
 
-// ADDING REFORMATED DATAS FORM  JSON5 OBJECT TO final 
+// ADDING REFORMATED DATAS FORM  JSON5 OBJECTS TO final 
 let in_final_Notin_kanjidb=[], cpt=0, cpt___
-final = final.map(elt=>{
-     let a = kanjidb.find(e=>e.Kanji == elt.kanji)
+final = final.map((elt,i)=>{
+     let bunka = bunkajpp.find(e=>e.kanji[0] == (elt).kanji)
+     let a = bunka && bunka.kanjidb || kanjidb.find(e=>e.Kanji == elt.kanji),
+         t = bunka && bunka.tkm || {}
      cpt++; cpt___ = a ? a.id : "i."+cpt___+" 絶対にil faut trouver un moyen de mettre qlqchose d'interessant ici (si le kanji encore n'est pas un de la variable bunkajp). "
      if(!a)in_final_Notin_kanjidb.push(elt.kanji)
-     return {...elt, 
+     return { ...t,
+          ...elt, 
           jlpt: a && a['JLPT-test'] || "-",
           meaning: [...elt.meaning, {on:a && a['Translation of On'] || "-", kun:a && a['Translation of Kun'] || "-"}],
           id: cpt,
@@ -411,6 +416,20 @@ console.log(radicalObject);
      // console.log(kanjidb);
      sample0=kanjidb[0]
      i=0
+     $uls = []
+
+
+     function sanitize_$uls($ul){
+          console.log("IL FAUT CRÉER ICI UN BOUTON span.close POUR POUVOIR SUPPRIMER UNE LISTE DE RESULTATS");
+          console.log("ET CE BOUTON APPELLE UNE FONCTION QUI GERE LA SUPPRIMER DU <ul/> ET LA SUPPRESSION DE SA VARIABLE DANS $uls");
+          console.log($ul[0])
+          console.log($ul[0].ul)
+          console.log($ul[0].ul_id)
+          let match_with_$ul = $uls.find(e=>e.ul == $ul[0])
+          delete $uls[match_with_$ul]
+          $ul.append($('<span/>').html('X').on('click', e=>$(e.target).parents('ul').remove()))
+     }
+
 
 
 
