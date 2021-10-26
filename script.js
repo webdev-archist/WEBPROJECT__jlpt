@@ -101,7 +101,7 @@ console.log(in_final_Notin_kanjidb)
 // INVERTING THE OBJECT BY CONVERTING IT TO AN JSON OBJECT
 // AND MAKING THE OBJECT REFERED BY KANJI (MAKING OBJECT KEY MATCHING KANJI)
 // EX: finalObject = {"守": {id........}, "好": {id........}, ........}
-finalObject={}
+const finalObject={}
 final.forEach(elt=>{
      finalObject[elt.kanji] = elt
 })
@@ -112,7 +112,7 @@ final.forEach(elt=>{
 // INVERTING THE OBJECT BY CONVERTING IT TO AN JSON OBJECT
 // AND MAKING THE OBJECT REFERED BY KANJI (MAKING OBJECT KEY MATCHING KANJI)
 // EX: radicalObject = {"守": {id........}, "好": {id........}, ........}
-radicalObject={}
+const radicalObject={}
 radicals.forEach(elt=>{
      radicalObject[elt.radical] = elt
 })
@@ -179,7 +179,7 @@ console.log(radicalObject);
      ))
 
      let output0 = {}, output01 = [], 
-     output11 = ["tous les kanji qui sont dans bunkajpp, mais pas dans tkm"]
+     output11 = ["tous les kanji qui sont dans bunkajpp, mais pas dans tkm"],
      output1 = {"tous les kanji": "qui sont dans bunkajpp, mais pas dans tkm"}
      // let final___templateKanjiNav = final.map((e)=>{
      bunkajpp.forEach((elt,i)=>{
@@ -412,7 +412,6 @@ console.log(radicalObject);
           nearby_kanjisfrequence: ['怠']
      }
      kanjidb_toSanitize___ = []
-     let bodyDatas = document.body.datas = {}
      // console.log(kanjidb);
      sample0=kanjidb[0]
      i=0
@@ -463,3 +462,66 @@ console.log(radicalObject);
           alert('see console')
           console.log(obj);
      }
+
+
+
+
+     // SEARCH FUNCTIONS
+
+     function search_in_tkmjson(req){
+          return final.find(e=>e.kanji==req)
+      }
+     function s_kanji(term){
+          return bunkajpp.find(e=>{
+               return e.kanji[0].charAt(0)==term
+          })
+     }
+
+     // BOOLEAN FUNCTIONS
+
+     function isKanji(ch) {
+          return (ch >= "\u4e00" && ch <= "\u9faf") ||
+          (ch >= "\u3400" && ch <= "\u4dbf");
+     }
+     
+     function isHira(ch) {
+          return ch >= "\u3040" && ch <= "\u309f"
+     }
+     
+     function isKata(ch) {
+          return ch >= "\u30a0" && ch <= "\u30ff"
+     }
+     
+     
+     function strIsKataOnly(str){
+          let cpt=[], tmp
+          str.split('').forEach(e=>{
+          cpt.push([isHira(e), isKanji(e), isKata(e)].every((e,i)=>e!==[true, true, false][i]))
+          })
+          return cpt.every(e=> e == true)
+     }
+     function strIsHiraOnly(str){
+          let cpt=[], tmp
+          str.split('').forEach(e=>{
+          cpt.push([isKata(e), isKanji(e), isHira(e)].every((e,i)=>e!==[true, true, false][i]))
+          })
+          return cpt.every(e=> e == true)
+     
+     }
+     function strIsKanjiOnly(str){
+          let cpt=[], tmp
+          str.split('').forEach(e=>{
+          cpt.push([isKata(e), isHira(e), isKanji(e)].every((e,i)=>e!==[true, true, false][i]))
+          })
+          return cpt.every(e=> e == true)
+     }
+     
+     
+     function collectKanjis(value){
+          let arr = []
+          let valueArr = value.split("").forEach(
+          caracter=>{if(isKanji(caracter))arr.push(caracter)}
+          )
+          return arr
+     }
+ 

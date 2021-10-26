@@ -1,4 +1,3 @@
-//
 
 
 
@@ -13,7 +12,6 @@ function s_kanji(term){
         return e.kanji[0].charAt(0)==term
     })
 }
-
 
 
 
@@ -97,3 +95,4 @@ const search_a_sentence = (termToSearch) => {
 
 
 
+export default {search_in_tkmjson, s_kanji, isKanji, isHira, isKata, strIsKataOnly, strIsHiraOnly, strIsKanjiOnly, collectKanjis, search_a_kanji, search_a_word, search_a_sentence}

@@ -1,5 +1,5 @@
-import KanjiClasses from './KanjiClasses.js'
-
+import events from "./events.js"
+import KanjiClasses from "./KanjiClasses.js"
 // add_cjs NE FONCTIONNE PAS POUR L'INSTANT
 function add_cjs(tag){
     tag.cjs = new KanjiClasses[[a]](tag)
@@ -19,4 +19,5 @@ searchKanjiSelect.cjs = new KanjiClasses['searchbox__form--#searchKanjiSelect'](
 /* ---------------------------------------------------------------------------------------------------- */
 //
 
+events.automateTags()
 

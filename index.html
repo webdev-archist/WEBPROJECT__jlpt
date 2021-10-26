@@ -74,6 +74,8 @@
           
      </header>
      <nav class="searchbox">
+          <ul class="searchbox__results sources" id="searchResuls_sources"></ul>
+          <ul class="searchbox__results" id="searchResuls"></ul>
           <!-- form>(fieldset>label{音・訓の検索：}+(select>option)+input#input_search)+ul#searchResuls -->
           <form class="searchbox__form" action="#" onsubmit="return false">
                <fieldset>
@@ -93,7 +95,6 @@
                     <input name="searchKanjiInput"type="text" id="searchKanjiInput">
                </fieldset>
           </form>
-          <ul class="searchbox__results" id="searchResuls"></ul>
      </nav>
      <main id="main">
           <!-- 
@@ -165,8 +166,5 @@
 </body>
 
 <script type="module" src="kanjiLib__module.js"></script>
-<script src="kanjiLib.js"></script>
-<script src="functionalDom.js"></script>
-<script src="events.js"></script>
 <script src="script.js"></script>
 </html>
