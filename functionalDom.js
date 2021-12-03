@@ -62,28 +62,46 @@
 
     const getHiraHTML = ($ul, obj) => {
         $ul.html("").append(
-            $('<li>').append($('<div>').html(obj.tkm.kun.map(e=>`<span>${e}</span>`)))
-                     .append($('<div>').html(obj.kun))
+            $('<li>').append($('<div>').html(obj.kunyomi.map(e=>`<span>${e}</span>`)))
+                     .append($('<div>').html(obj.kunyomi))
         )
 
     }
     const getKataHTML = ($ul, obj) => {
         $ul.html("").append(
-            $('<li>').append($('<div>').html(obj.tkm.on.map(e=>`<span>${e}</span>`)))
-                     .append($('<div>').html(obj.on))
+            $('<li>').append($('<div>').html(obj.onyomi.map(e=>`<span>${e}</span>`)))
+                     .append($('<div>').html(obj.onyomi))
         )
 
     }
     const getGoiHTML = ($ul, obj) => {
-          $ul.find('li').append($('<span>').html(obj.tkm.related_words.map(e=>e.kanjis)))
+          $ul.find('li').append($('<span>').html(obj.jukugo.map(e=>e.kanjis)))
           related_words2HTML($ul, obj)
     }
 
     const related_words2HTML = ($ul, obj) => {
      //     alert(obj.kanji)
           $ul.append(
-               obj.tkm.related_words.map(e=>
+               obj.jukugo.map(e=>
                     $('<figure/>')
+                         .append(
+                              $('<div/>').html(
+                                   ()=>{
+                                        // SYNONYMES AVEC LES JUKUGO
+                                        let /*tmp, */tmpbis, matched = [], obj_jukugo_meaning = e.meaning.replace('-','').trim().split(',')
+                                        for(let a in synonyms){
+                                             // tmp = obj_jukugo_meaning.find(ee=>a.indexOf(ee)!=-1)
+                                             tmpbis = synonyms[a].find((ee,i)=>ee==e.kanjis)
+                                             if(tmpbis){
+                                                  tmpbis = synonyms[a].find((ee,i)=>ee!==e.kanjis)
+                                                  matched.push(tmpbis)
+                                             }
+                                        }
+                                        return matched.join(', ')
+                                   }
+                              )
+                              
+                         )
                          .append(
                               $('<cite/>').append(e.kanjis.split('').map(ee=>{
                                         let classname = ee == obj.kanji ? "on" : ""

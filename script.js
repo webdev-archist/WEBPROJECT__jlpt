@@ -1,9 +1,36 @@
 document.body._ = {}
 
+
+Object.prototype.each = function(func){
+     let a
+     for(a in this)if(this.hasOwnProperty(a))
+          func(a,this[a], this)
+}
+Object.prototype.map = function(func){
+     let a, obj
+     for(a in this)if(this.hasOwnProperty(a))
+          this[a] = func(a,this[a], this)
+     return this
+}
+Object.prototype.reduce = function(memo, func=function(memo,val){return memo+val}){
+     let skip,a
+     if(!memo)
+          for(a in this){
+               memo = this[a]
+               skip=a
+               break
+          }
+     for(a in this)if(this.hasOwnProperty(a)&&a!=skip)
+          memo = func(memo, this[a], a, this)
+     return memo
+}
+Object.prototype.size = Object.prototype.length = function(){
+     return Object.keys(this).length
+}
+
 // KANJIS OBJECT VARIABLE LIST:
 // final, output0, output01, output1, output11, bunkajpp, 
-// bunkajp, kanjidb, tkm, 
-// jukugo, radicals, kanjiDictionary, (final), 
+// bunkajp, kanjidb, tkm,
 // in_final_Notin_kanjidb, 
 
 
@@ -22,7 +49,9 @@ document.body._ = {}
 
 // REFORMATING A LITTLE THE DATAS FROM final BEFORE USING IT
 // IT IS MAYBE NOT NECESSARY ANYMORE
+/*
 final = final.map(elt=>{
+     console.log(elt)
      return {...elt, source: [], 
           radical: elt.radical.replace(' ','').split('(').map(ee=>ee.replace(')','').split(',')).join().split(','), 
           onyomi: elt.onyomi.replace(' ','').split(","), 
@@ -32,10 +61,12 @@ final = final.map(elt=>{
           // grade: [elt.grade], 
      }
 })
+*/
+
 
 // ADDING .source ATTRIBUTE TO  final 
 let notsource=[]
-final = final.map(elt=>{
+/*final = */final.map(elt=>{
      let a = kanjiDictionary.elements.edges.filter(e=>e.data.target == elt.kanji)
      if(!a)notsource.push(elt.kanji)
      else elt.source.push(...a.map(e=>e.data.source).join().split(','))
@@ -44,17 +75,51 @@ final = final.map(elt=>{
 })
 console.log(final[210])
 console.log(notsource)
-
+// alert(illpairs)
 // ADDING REFORMATED DATAS FORM  JSON5 OBJECTS TO final 
 let in_final_Notin_kanjidb=[], cpt=0, cpt___
+/*
 final = final.map((elt,i)=>{
-     let bunka = bunkajpp.find(e=>e.kanji[0] == (elt).kanji)
+     cpt___ = ""
+     let bunka = bunkajpp.find(e=>e.kanji[0].charAt(0) == (elt).kanji)
+     // alert(bunka+" "+elt.kanji)
+     // console.log(bunka && bunka.obs);
      let a = bunka && bunka.kanjidb || kanjidb.find(e=>e.Kanji == elt.kanji),
          t = bunka && bunka.tkm || {}
      cpt++; cpt___ = a ? a.id : "i."+cpt___+" 絶対にil faut trouver un moyen de mettre qlqchose d'interessant ici (si le kanji encore n'est pas un de la variable bunkajp). "
      if(!a)in_final_Notin_kanjidb.push(elt.kanji)
+     initialiserForUnicode()
+     // console.log(nnn);
+     // while(elt.kanji != String.fromCharCode("\\u"+getCompteur().charCodeAt()))
+     //      compter()
+
+     let selfKanjiDamage = {}
+     tmp = illpairs.find(e=>e[0].indexOf(elt.kanji)!=-1 || e[1].indexOf(elt.kanji)!=-1) || '-'
+     selfKanjiDamage.illpairs = tmp 
+     let tmpbis = []
+     for(a in dupe){
+          tmp = Array.from(new Set(collectKanjis(dupe[a].join())))
+          // alert(tmp)
+          tmp = tmp.find(e=>e === elt.kanji)
+          if(tmp)tmpbis.push(dupe[a])
+     }
+//
+// MAINTENANT IL FAUT TROUVER LES SYNONYMES AVEC LE KANJI EN COURS elt.kanji
+//
+     selfKanjiDamage.dupe = tmpbis 
+     // if(tmp)alert(tmp+"   "+elt.kanji)
+     
+     
      return { ...t,
           ...elt, 
+          kanjiDamage: selfKanjiDamage,
+          codes: {
+               unicode: "\\u"+nnn.toString(16),
+               codeAt: elt.kanji.charCodeAt(),
+               htmlCode: "&#",
+               cssCode: "\\",
+               hexCode: "?",
+          },
           jlpt: a && a['JLPT-test'] || "-",
           meaning: [...elt.meaning, {on:a && a['Translation of On'] || "-", kun:a && a['Translation of Kun'] || "-"}],
           id: cpt,
@@ -62,45 +127,47 @@ final = final.map((elt,i)=>{
           grade: [
                a && a.Grade || "-", elt.grade, a && {"Kanji Classification": a['Kanji Classification']} || "-"
           ],
-          on: {
-               "#": a && a["# of On"] || '-', 
-               "#mean": a && a["# of Meanings of On"] || '-', 
-               meaning: a && a["Translation of On"] || '-', 
-               joyo_in: a && a["On within Joyo"] || '-', 
-               joyo_out: a && a["On Ratio beyond Joyo without Proper Nouns"] || '-', 
-               properNames_in: a && a["On Ratio with Proper Nouns"] || '-', 
-               properNames_out: a && a["On Ratio without Proper Nouns"] || '-', 
-               freq_joyo_in: a && a["Acc. Freq. On within Joyo"] || '-', 
-               freq_joyo_out: a && a["Acc. Freq. On Ratio beyond Joyo without Proper Nouns"] || '-', 
-               freq_properNames_in: a && a["Acc. Freq. On Ratio with Proper Nouns"] || '-', 
-               freq_properNames_out: a && a["Acc. Freq. On Ratio without Proper Nouns"] || '-', 
-          },
-          kun: {
-               "#": a && a["# of Kun"] || '-', 
-               "#mean": a && a["# of Meanings of Kun"] || '-', 
-               meaning: a && a["Translation of Kun"] || '-', 
-               joyo_in: a && a["Kun within Joyo"] || '-', 
-               joyo_out: a && a["Kun Ratio beyond Joyo without Proper Nouns"] || '-', 
-               properNames_in: a && a["Kun Ratio with Proper Nouns"] || '-', 
-               properNames_out: a && a["Kun Ratio without Proper Nouns"] || '-', 
-               freq_joyo_in: a && a["Acc. Freq. Kun within Joyo"] || '-', 
-               freq_joyo_out: a && a["Acc. Freq. Kun Ratio beyond Joyo without Proper Nouns"] || '-', 
-               freq_properNames_in: a && a["Acc. Freq. Kun Ratio with Proper Nouns"] || '-', 
-               freq_properNames_out: a && a["Acc. Freq. Kun Ratio without Proper Nouns"] || '-', 
-          },
-          details: {
-               properNames_in: a && a["Kanji Frequency with Proper Nouns"] || '-', 
-               properNames_out: a && a["Kanji Frequency without Proper Nouns"] || '-'
-          },
+          on: a["# of On"] && {
+               "#": a["# of On"] || '-', 
+               "#mean": a["# of Meanings of On"] || '-', 
+               meaning: a["Translation of On"] || '-', 
+               joyo_in: a["On within Joyo"] || '-', 
+               joyo_out: a["On Ratio beyond Joyo without Proper Nouns"] || '-', 
+               properNames_in: a["On Ratio with Proper Nouns"] || '-', 
+               properNames_out: a["On Ratio without Proper Nouns"] || '-', 
+               freq_joyo_in: a["Acc. Freq. On within Joyo"] || '-', 
+               freq_joyo_out: a["Acc. Freq. On Ratio beyond Joyo without Proper Nouns"] || '-', 
+               freq_properNames_in: a["Acc. Freq. On Ratio with Proper Nouns"] || '-', 
+               freq_properNames_out: a["Acc. Freq. On Ratio without Proper Nouns"] || '-', 
+          } || {},
+          kun: a["# of Kun"] && {
+               "#": a["# of Kun"] || '-', 
+               "#mean": a["# of Meanings of Kun"] || '-', 
+               meaning: a["Translation of Kun"] || '-', 
+               joyo_in: a["Kun within Joyo"] || '-', 
+               joyo_out: a["Kun Ratio beyond Joyo without Proper Nouns"] || '-', 
+               properNames_in: a["Kun Ratio with Proper Nouns"] || '-', 
+               properNames_out: a["Kun Ratio without Proper Nouns"] || '-', 
+               freq_joyo_in: a["Acc. Freq. Kun within Joyo"] || '-', 
+               freq_joyo_out: a["Acc. Freq. Kun Ratio beyond Joyo without Proper Nouns"] || '-', 
+               freq_properNames_in: a["Acc. Freq. Kun Ratio with Proper Nouns"] || '-', 
+               freq_properNames_out: a["Acc. Freq. Kun Ratio without Proper Nouns"] || '-', 
+          } || {},
+          details: a["Kanji Frequency with Proper Nouns"] && {
+               properNames_in: a["Kanji Frequency with Proper Nouns"] || '-', 
+               properNames_out: a["Kanji Frequency without Proper Nouns"] || '-'
+          } || {},
+          examples: bunka && bunka.examples.map(e=>e.split('，')).join().split(',') || [],
+          observations: bunka && bunka.obs || []
      }
 })
 console.log(final[210])
 console.log(in_final_Notin_kanjidb)
 
-
-// INVERTING THE OBJECT BY CONVERTING IT TO AN JSON OBJECT
+// INVERTING THE KANJI OBJECT BY CONVERTING IT TO AN JSON OBJECT
 // AND MAKING THE OBJECT REFERED BY KANJI (MAKING OBJECT KEY MATCHING KANJI)
 // EX: finalObject = {"守": {id........}, "好": {id........}, ........}
+*/
 const finalObject={}
 final.forEach(elt=>{
      finalObject[elt.kanji] = elt
@@ -109,18 +176,102 @@ final.forEach(elt=>{
 
 
 
-// INVERTING THE OBJECT BY CONVERTING IT TO AN JSON OBJECT
-// AND MAKING THE OBJECT REFERED BY KANJI (MAKING OBJECT KEY MATCHING KANJI)
-// EX: radicalObject = {"守": {id........}, "好": {id........}, ........}
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+const jlptObject = []
+final.forEach(e=>{
+     if(!jlptObject[parseInt(e.jlpt)]) jlptObject[parseInt(e.jlpt)] = []
+     jlptObject[parseInt(e.jlpt)].push(e)
+})
+
+let occurrenceObject = {}, strates = [250,500,1000,2000,3000,5000,7000,10000]
+final.forEach(e=>{
+     let tmp = 0
+     //IL FAUT CRÉER UN ARRAY CONTENANT LES TRANCHES D'OCCURRENCE SOUHAITÉ
+     //PUIS, VÉRIFIÉ SI LA key EXISTE DÉJÀ DANS L'ARRAY
+     //ET ENFIN, LE PUSH À L'ARRAY
+     if(e.occurence<strates[0])
+          tmp = 0
+     else{
+          strates.forEach(s=>{
+               if(e.occurrence<s && tmp==0)
+                    tmp = s
+          })
+     }
+     if(!occurrenceObject[tmp+""])
+          occurrenceObject[tmp+""] = []
+     occurrenceObject[tmp+""].push(e)
+})
+*/
+
+// INVERTING THE RADICAL OBJECT BY CONVERTING IT TO AN JSON OBJECT
+// AND MAKING THE OBJECT REFERED BY RADICAL (MAKING OBJECT KEY MATCHING RADICAL)
+// EX: radicalObject = {"舌": {index........}, "舛": {index........}, ........}
 const radicalObject={}
+let tmp
 radicals.forEach(elt=>{
-     radicalObject[elt.radical] = elt
+     tmp = elt.radical.replace('(',',')
+     tmp = tmp.replace(')','')
+     tmp = tmp.split(',')
+     tmp.map(e_parsedRadicalString=>{
+          radicalObject[e_parsedRadicalString] = elt
+          radicalObject[e_parsedRadicalString].similars = tmp
+     })
 })
 console.log(radicalObject);
 
 
 
-
+// INVERTING THE KANJIDIC OBJECT BY CONVERTING IT TO AN JSON OBJECT
+// AND MAKING THE OBJECT REFERED BY SOURCE (MAKING OBJECT KEY MATCHING SOURCE)
+// EX: sourceObject = {"䍃": ['謡', '遥'], "不": ['丕', '否', '歪', '杯'], ........}
+const sourceObject_={}
+kanjiDictionary.elements.edges.map(e=>{
+     if(!sourceObject_[e.data['source']])sourceObject_[e.data['source']] = []
+     sourceObject_[e.data['source']].push(sourceObject_[e.data['target']])
+})
+console.log("sourceObject_")
+console.log(sourceObject_)
+const sourceObject={}
+let dontmatch=[], match=[], nbr = 0
+for(a in radicalObject){
+     tmp = a.replace('(',',')
+     tmp = tmp.replace(')','')
+     tmp = tmp.split(',')
+     nbr += tmp.length
+     tmp.forEach(e=>{
+          if(!sourceObject_[e]) dontmatch.push(e)
+          else match.push(e)
+     })
+}
+radical_dont_match_any_source = {}
+dontmatch.forEach(e=>{
+     radical_dont_match_any_source[e] = ""
+})
+sourceObject["radical_dont_match_any_source"] = radical_dont_match_any_source
+match.forEach(e=>{
+     if(!sourceObject[e])sourceObject[e] = []
+     sourceObject[e].push(radicalObject[e])
+})
+sourceObject["source_dont_match_any_radical"] = {}
+kanjiDictionary.elements.edges.forEach(e=>{
+     if(!sourceObject[e.data.source])sourceObject[e.data.source] = []
+     sourceObject[e.data.source].push(e.data.target)
+     if(!radicalObject[e.data.source])sourceObject["source_dont_match_any_radical"][e.data.source] = ""
+})
+console.log("sourceObject")
+console.log(sourceObject)
 
 
 
@@ -151,17 +302,11 @@ console.log(radicalObject);
                id: e.kanjidb.id,
                // index: '',
                kanji: e.tkm.kanji,
-               // jukugo, radicals, kanjiDictionary, (final), 
                kata: e.tkm.on,
-               // jukugo, radicals, kanjiDictionary, (final), 
      on: e.tkm.on,
-     // jukugo, radicals, kanjiDictionary, (final), 
                hira: e.tkm.kun,
-               // jukugo, radicals, kanjiDictionary, (final), 
      kun: e.tkm.kun,
-     // jukugo, radicals, kanjiDictionary, (final), 
                     nanori: e.tkm.nanori,
-                    // jukugo, radicals, kanjiDictionary, (final), 
                arrowed_kanji: e.strokes_image,
      strokes_image: e.strokes_image,
                     strokes: e.strokes,
@@ -193,19 +338,13 @@ console.log(radicalObject);
                // index: '',
                kanji,
                kata: elt.tkm.on || [],
-               // jukugo, radicals, kanjiDictionary, (final), 
      onyomi: e && e.on,
                hira: elt.tkm.kun || [],
-               // jukugo, radicals, kanjiDictionary, (final), 
      kunyomi: e && e.kun,
                     nanori: e && e.nanori || elt.tkm.nanori,
-                    // jukugo, radicals, kanjiDictionary, (final), 
                arrowed_kanji: elt.tkm.strokes_image,
-               // jukugo, radicals, kanjiDictionary, (final), 
      strokes_image: elt.tkm.strokes_image,//
-     // jukugo, radicals, kanjiDictionary, (final), 
                     strokes: e && e.strokes || elt.tkm.strokes,
-                    // jukugo, radicals, kanjiDictionary, (final), 
                radical: e && e.radical || [],
                jlpt: elt.kanjidb["JLPT-test"],
                jouyou: '',//
@@ -214,15 +353,11 @@ console.log(radicalObject);
                     compound: elt.examples[1] && !strIsKanjiOnly(elt.examples[1].replace('、','')) ? elt.examples[1].split('、') : !strIsKanjiOnly(elt.examples[0].replace('、','')) ? elt.examples[0] : []
                },
                words_: elt.tkm.related_words,//
-               // jukugo, radicals, kanjiDictionary, (final), 
                words__: [''],//
                sentences: [''],//
                occurence: elt.tkm.occurrence,
-               // jukugo, radicals, kanjiDictionary, (final), 
                translates: [elt.tkm.meaning, {on:elt.kanjidb['Translation of On'], kun:elt.kanjidb['Translation of Kun']}],
-               // jukugo, radicals, kanjiDictionary, (final), 
                grade: [elt.tkm.grade, elt.kanjidb.Grade, elt.kanjidb['Kanji Classification']],
-               // jukugo, radicals, kanjiDictionary, (final), 
                details: {
                     properNames_in: elt.kanjidb["Kanji Frequency with Proper Nouns"], 
                     properNames_out: elt.kanjidb["Kanji Frequency without Proper Nouns"]
@@ -283,6 +418,10 @@ console.log(radicalObject);
 
      const historic = new Object()
      $(document).ready(function(){
+          let tmp=$('.headerbarBranding>.headerbarBranding__problematique')
+          $("header").on('mouseover',()=>{
+               $('body').prepend(tmp)
+          }).on('mouseout',()=>{$('.headerbarBranding').append(tmp)})
           // var tableKanjis = urlist.querySelectorAll('tr>td:first-of-type>font:first-of-type')
           // var $tableKanjisTDs = $('table#urlist td:first-of-type')
           // $tableKanjisTDs.on('click', (e)=>{
@@ -524,4 +663,32 @@ console.log(radicalObject);
           )
           return arr
      }
- 
+     
+     var nnn
+     function initialiserForUnicode(i = parseInt('4e00',16)){
+          i = parseInt(i,16)
+          if (isNaN(i)) {
+               nnn=0;
+          }
+          // la valeur maximale est FFFFFFFFFFFF (12 F en hexadécimal), soit 281474976710655 en décimal :
+          else if (i>281474976710655) {
+               nnn=281474976710655;
+               }
+          else {
+               nnn=i;
+          }
+     }
+
+     function compter(){
+          nnn=nnn+1;
+     } 
+     function getCompteur(){
+          return nnn.toString(16)
+     }
+
+     function decompter(){
+          if (n!=0) 
+               {
+               nnn=nnn-1;
+               }
+     } 

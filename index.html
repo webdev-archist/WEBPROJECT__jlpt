@@ -9,12 +9,16 @@
      <script src="./json/bunkajp_extractedDatas.js"></script>
      <script src="./json/thekanjimap_extractedDatas.js"></script>
      <script src="./json/bunkajp_plus.js"></script>
-     <script src="json/sanitaze/kanji.js"></script>
+     <!-- <script src="json/sanitaze/kanji.js"></script> -->
      <script src="json/sanitaze/jukugo.js"></script>
      <script src="json/sanitaze/kanjidic.js"></script>
      <script src="json/sanitaze/radicals.js"></script>
      
      
+     <script src="json/final.js"></script>
+
+
+
      
      <script src="js/jquery.js"></script>
      <script type="text/javascript" charset="utf-8">
@@ -46,23 +50,26 @@
                <p><a href="bunkaJp.html" target="_blank">bunka.jp</a></p>
                <p><a href="thekanjimap/index.html" target="_blank">thekanjimap</a></p>
                <p><a href="http://kanjidamage.com" target="_blank">kanjidamage</a></p>
+               <p><a href="https://kanji.sljfaq.org/draw-canvas.html">handwrite?</a></p>
+               <p><a href="https://jisho.org/">jisho</a></p>
           </div>
           <hgroup class="headerbarBranding" itemscope="" itemtype="https://schema.org/Organization">
               <h1 class="headerbarBranding__logoSlogan">
                    <a href="/" title="titre H1" itemprop="url">
-                         <img src="assets/logo.png" alt="logo de (la dite marque)" itemprop="logo">
-                         <strong>jlpt-webapp</strong>
+                         <!-- <img src="assets/logo.png" alt="logo de (la dite marque)" itemprop="logo"> -->
+                         <img src="assets/logo-tmp.jpg" alt="logo de (la dite marque)" itemprop="logo">
+                         <strong>ejlpt - by <span>康さん</span></strong>
                     </a>
                </h1>
-              <h2 class="headerbarBranding__problematique">
-                   titre Hn(problématique/slogan)
-                   <strong>
-                        <a href="">expression-clé</a>
-                        <button class="headerbarBranding__carteVisite-buttonToggle">
-                             X<i class="iconCarteVisiteATrouverxdxdxd"></i>
-                         </button>
-                    </strong>
-               </h2>
+               <!-- <h2 class="headerbarBranding__problematique">
+                    titre Hn(problématique/slogan)
+                    <strong>
+                         <a href="">expression-clé</a>
+                         <button class="headerbarBranding__carteVisite-buttonToggle">
+                              X<i class="iconCarteVisiteATrouverxdxdxd"></i>
+                              </button>
+                         </strong>
+                    </h2> -->
           </hgroup>
 
           <!-- menu>(li>a{icon})*3 -->
@@ -74,8 +81,14 @@
           
      </header>
      <nav class="searchbox">
+          <ul class="listLists" id="searchResuls_listLists">
+               <li id="listLists__details">
+                    <button class="show_or_add">+<span>0</span></button>
+               </li>
+               <ol id="listLists__lists"></ol>
+          </ul>
           <ul class="searchbox__results sources" id="searchResuls_sources"></ul>
-          <ul class="searchbox__results" id="searchResuls"></ul>
+          <ul class="searchbox__results kanjis" id="searchResuls"></ul>
           <!-- form>(fieldset>label{音・訓の検索：}+(select>option)+input#input_search)+ul#searchResuls -->
           <form class="searchbox__form" action="#" onsubmit="return false">
                <fieldset>
@@ -94,6 +107,10 @@
                     </select>
                     <input name="searchKanjiInput"type="text" id="searchKanjiInput">
                </fieldset>
+               <div class="listsCounts">
+                    <span class="list1"></span>
+                    <span class="list2"></span>
+               </div>
           </form>
      </nav>
      <main id="main">
@@ -129,17 +146,19 @@
                               <p>???</p>
                          </li>
                     </ul>
+                    <span class="thekanji"></span>
                </section>
           </article>
           <!-- nav.resultsList>form+section>ul>li.bigger+li>span.kanji_nav+(.kata>span)+(.details>span)+button.hira -->
           <nav class="resultsList">
-               <section>
+               <section class="resultsList__lists">
                </section>
-               <form action="">
+               <form action="" class="resultsList__form">
                     <input id="absisse" type="range" min='1' max='5'>
                     <input id="ordonnee" type="range" min='1' max='5'>
                     <input type="color" value="#FF0000">
                </form>
+               <figure id="bigger" class="resultsList__zoom bigger"></figure>
           </nav>
           <!-- <nav class="resultsList">
                <div><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
@@ -166,5 +185,6 @@
 </body>
 
 <script type="module" src="kanjiLib__module.js"></script>
+<script src="kanjiDamage.js"></script>
 <script src="script.js"></script>
 </html>

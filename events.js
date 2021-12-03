@@ -74,7 +74,8 @@ const automateTags = () => {
                 show_hira
             ){
                 let [$hiraUl, $kataUl, $goiUl] = 
-                        searchKanjiInput.html && searchKanjiInput.html[kanjiTxt] ||
+                        searchKanjiInput.html && searchKanjiInput.html[kanjiTxt] 
+                        ||
                         [
                             $("article>section>h2.hira+ul"),
                             $("article>section>h2.kata+ul"),
@@ -88,10 +89,13 @@ const automateTags = () => {
 
 
                 
-                let kanjiObj = historic[kanjiTxt] || bunkajpp.find(elt=>elt.kanji[0].charAt(0) == kanjiTxt)
+                let kanjiObj = historic[kanjiTxt] || finalObject[kanjiTxt]
+                // let kanjiObj = historic[kanjiTxt] || bunkajpp.find(elt=>elt.kanji[0].charAt(0) == kanjiTxt)
                 
                 console.log(kanjiTxt);
-                console.log(kanjiObj.tkm.related_words);
+                console.log(finalObject[kanjiTxt]);
+                console.log(finalObject[kanjiTxt].jukugo);
+                console.log(kanjiObj.jukugo);
                 historic[kanjiTxt] = historic[kanjiTxt] || kanjiObj
 
                 funcdom.getHiraHTML($hiraUl, kanjiObj)

@@ -64,7 +64,24 @@ function collectKanjis(value){
     )
     return arr
 }
-
+const kunyomiFilter = (hira) => {
+    let list = final.filter(elt=>{
+        let arr = elt.kunyomi.map(kun=>{
+         //    console.log(e.kunyomi.length==0,e.kunyomi[0]=='',e.kanji,e.kunyomi,kun,hira,kun.replace('.','').indexOf(hira),hira.replace('.','').indexOf(kun))
+            return elt.kunyomi.length==1 && elt.kunyomi[0]=='' ? false : kun.replace('.','').indexOf(hira)!=-1
+        })
+        // console.log(arr)
+        return arr.find(e=>e===true) !== undefined
+    })
+    return list.map(e=>e.kanji)
+}
+const onyomiFilter = (kata) => {
+     final.filter(e=>{
+         e.onyomi.map(on=>{
+             on.replace('.','').indexOf(kata)!=-1
+         })
+     })
+}
 
 
 
@@ -95,4 +112,4 @@ const search_a_sentence = (termToSearch) => {
 
 
 
-export default {search_in_tkmjson, s_kanji, isKanji, isHira, isKata, strIsKataOnly, strIsHiraOnly, strIsKanjiOnly, collectKanjis, search_a_kanji, search_a_word, search_a_sentence}
+export default {search_in_tkmjson, s_kanji, isKanji, isHira, isKata, strIsKataOnly, strIsHiraOnly, strIsKanjiOnly, collectKanjis, kunyomiFilter, search_a_kanji, search_a_word, search_a_sentence}

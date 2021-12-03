@@ -1,17 +1,23 @@
-import events from "./events.js"
-import KanjiClasses from "./KanjiClasses.js"
+// import events from "./events.js"
+import _SearchKanjiInput from "./searchKanjiInput.js"
+import _SearchKanjiSelect from "./searchKanjiSelect.js"
+
+
+
 // add_cjs NE FONCTIONNE PAS POUR L'INSTANT
 function add_cjs(tag){
     tag.cjs = new KanjiClasses[[a]](tag)
 }
 // add_cjs function not yet finished
 
+
+
 /* ---------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------------- */
 /* ---------------------------------------------------------------------------------------------------- */
 
-searchKanjiInput.cjs = new KanjiClasses['searchbox__form--#searchKanjiInput'](searchKanjiInput)
-searchKanjiSelect.cjs = new KanjiClasses['searchbox__form--#searchKanjiSelect'](searchKanjiSelect)
+searchKanjiInput.cjs = new _SearchKanjiInput(searchKanjiInput)
+// searchKanjiSelect.cjs = new _SearchKanjiSelect(searchKanjiSelect)
 
 
 /* ---------------------------------------------------------------------------------------------------- */
@@ -19,5 +25,5 @@ searchKanjiSelect.cjs = new KanjiClasses['searchbox__form--#searchKanjiSelect'](
 /* ---------------------------------------------------------------------------------------------------- */
 //
 
-events.automateTags()
+searchKanjiInput.cjs.defferred_events()
 
