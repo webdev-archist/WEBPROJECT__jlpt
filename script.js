@@ -1,6 +1,6 @@
 document.body._ = {}
 
-
+/*
 Object.prototype.each = function(func){
      let a
      for(a in this)if(this.hasOwnProperty(a))
@@ -27,7 +27,7 @@ Object.prototype.reduce = function(memo, func=function(memo,val){return memo+val
 Object.prototype.size = Object.prototype.length = function(){
      return Object.keys(this).length
 }
-
+*/
 // KANJIS OBJECT VARIABLE LIST:
 // final, output0, output01, output1, output11, bunkajpp, 
 // bunkajp, kanjidb, tkm,
@@ -260,8 +260,13 @@ dontmatch.forEach(e=>{
      radical_dont_match_any_source[e] = ""
 })
 sourceObject["radical_dont_match_any_source"] = radical_dont_match_any_source
+
 match.forEach(e=>{
+// for(e in match)if(match.hasOwnProperty(a)){
+     // console.log(e);
+     // console.log(sourceObject[e]);
      if(!sourceObject[e])sourceObject[e] = []
+     console.log(Array.isArray(sourceObject[e]));
      sourceObject[e].push(radicalObject[e])
 })
 sourceObject["source_dont_match_any_radical"] = {}

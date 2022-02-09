@@ -35,7 +35,9 @@ export default class Events extends Tags {
         })
 
         // RADICAUX ET SOURCES: LES RÉSULTATS DE RECHERCHE 
-        $(searchResuls_sources).on('click', 'li',e=>this.getSourceRelatedKanjis(e))
+        $(searchResuls_sources).on('click', 'li',
+            e=>this.getSourceRelatedKanjis(e)
+        )
 
         //INFOBULLE/ADD_BUTTON: LISTE DE LISTES
         $(listLists__details).on(

@@ -8,7 +8,13 @@ export default class SearchKanjiInput extends KanjiLogics{
         super(container)
         this.state = this.container.state = {kanjis: {}, sources: {}}
         this.new = false
-        this.slaves = {input1: $(searchKanjiInput), list1: $(searchResuls), list2: $(searchResuls_sources), section1: $(main).find('>nav>section'), activedList: ()=>$(main).find('>nav>section>ul.active')}
+        this.slaves = {
+            input1: $(searchKanjiInput)
+            , list1: $(searchResuls)
+            , list2: $(searchResuls_sources)
+            , section1: $(main).find('>nav>section')
+            , activedList: ()=>$(main).find('>nav>section>ul.active')
+        }
         this.$ul_kanjis = $(searchResuls)
         this.$ul_sources = $(searchResuls_sources)
         this.$uls = []

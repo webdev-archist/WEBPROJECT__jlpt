@@ -3,7 +3,8 @@
 
 export default class Tags/* extends SuperClass */{
     constructor(container) {
-        this.container = container;        this.$container = $(container)
+        this.container = container;        
+        this.$container = $(container)
       
     }
 
@@ -130,8 +131,7 @@ export default class Tags/* extends SuperClass */{
         console.log($ul);
         console.log($ul[0]);
 
-
-        $ul[0]._.push(kanjiObject.kanji)
+        $ul[0]._.push(kanjiObject[0].kanji)
         console.log($ul);
         // $ul[0].ul_id = $ul.length
 

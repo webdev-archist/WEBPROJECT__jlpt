@@ -622,7 +622,6 @@ ul {
     color: red;
   }
   nav.resultsList > section > ul > span {
-    top: calc(-1em - 6px) !important;
     left: 0em;
     right: unset !important;
   }
@@ -645,10 +644,10 @@ ul {
     box-shadow: 0 0 5px 1px black;
     box-sizing: border-box;
   }
-  nav.resultsList > section > ul > span:hover + .menuContextuel {
+  nav.resultsList > section > ul > span:hover + .menuContextuel, nav.resultsList > section > ul > span ~ .menuContextuel:hover {
     width: 100px;
   }
-  nav.resultsList > section > ul > span:hover ~ .tinyList {
+  nav.resultsList > section > ul > span:hover ~ .tinyList, nav.resultsList > section > ul > span ~ .menuContextuel:hover ~ .tinyList {
     width: calc(100% - 14em);
     z-index: 1;
     opacity: 1;
@@ -686,7 +685,7 @@ ul {
     right: unset !important;
   }
 
-  nav.resultsList > section > ul > span, nav.resultsList > section > ul > span:hover ~ .tinyList > span, nav.resultsList > section > ul > li > span.close, nav.resultsList > section > ul .bigger > span.close {
+  nav.resultsList > section > ul > span, nav.resultsList > section > ul > span:hover ~ .tinyList > span, nav.resultsList > section > ul > span ~ .menuContextuel:hover ~ .tinyList > span, nav.resultsList > section > ul > li > span.close, nav.resultsList > section > ul .bigger > span.close {
     position: absolute;
     top: 0;
     right: 0;
@@ -701,7 +700,7 @@ ul {
     background: whitesmoke;
     box-sizing: border-box;
   }
-  nav.resultsList > section > ul > span:hover, nav.resultsList > section > ul > span:hover ~ .tinyList > span:hover, nav.resultsList > section > ul > li > span.close:hover, nav.resultsList > section > ul .bigger > span.close:hover {
+  nav.resultsList > section > ul > span:hover, nav.resultsList > section > ul > span:hover ~ .tinyList > span:hover, nav.resultsList > section > ul > span ~ .menuContextuel:hover ~ .tinyList > span:hover, nav.resultsList > section > ul > li > span.close:hover, nav.resultsList > section > ul .bigger > span.close:hover {
     font-weight: bolder;
     color: red;
   }

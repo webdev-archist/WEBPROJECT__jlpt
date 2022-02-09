@@ -58,7 +58,8 @@ export default class KanjiLogics extends Events {
     getAllSourcesFromKanjisInInputTag = (allKanjisInInputTag) => {
     console.log(allKanjisInInputTag)
         let kanji,tmp,allSourcesFromKanjisInInputTag = []
-        for(kanji of allKanjisInInputTag){tmp=this.state.kanjis[kanji]
+        for(kanji of allKanjisInInputTag){
+            tmp=this.state.kanjis[kanji]
     console.log(tmp);
             let source = tmp.source
             let radical = tmp.radical
@@ -86,7 +87,7 @@ export default class KanjiLogics extends Events {
         // this.slaves.input1.val(list.join())
         // this.slaves.input1[0].focus()
         this.onChange_searchKanjiInput(e, list.join())
-        this.onClick__searchResultsUl(list_)
+        // this.onClick__searchResultsUl(list_)
         setTimeout(()=>{this.slaves.input1.val("")},1000)
         // this.slaves.input1[0].value = ""
 
