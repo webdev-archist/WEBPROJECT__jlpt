@@ -1,33 +1,6 @@
 document.body._ = {}
 
-/*
-Object.prototype.each = function(func){
-     let a
-     for(a in this)if(this.hasOwnProperty(a))
-          func(a,this[a], this)
-}
-Object.prototype.map = function(func){
-     let a, obj
-     for(a in this)if(this.hasOwnProperty(a))
-          this[a] = func(a,this[a], this)
-     return this
-}
-Object.prototype.reduce = function(memo, func=function(memo,val){return memo+val}){
-     let skip,a
-     if(!memo)
-          for(a in this){
-               memo = this[a]
-               skip=a
-               break
-          }
-     for(a in this)if(this.hasOwnProperty(a)&&a!=skip)
-          memo = func(memo, this[a], a, this)
-     return memo
-}
-Object.prototype.size = Object.prototype.length = function(){
-     return Object.keys(this).length
-}
-*/
+
 // KANJIS OBJECT VARIABLE LIST:
 // final, output0, output01, output1, output11, bunkajpp, 
 // bunkajp, kanjidb, tkm,
