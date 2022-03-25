@@ -4,3 +4,6 @@
 [submodule "quizApp"]
 	path = quizApp
 	url = git@github.com:webdev-archist/PROJECTS__Quizes.git
+[submodule "WanaKana"]
+	path = WanaKana
+	url = git@github.com:WaniKani/WanaKana.git
