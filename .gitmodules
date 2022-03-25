@@ -1,3 +1,6 @@
 [submodule "CSS____BlockElementModifier"]
 	path = CSS____BlockElementModifier
 	url = https://github.com/webdev-archist/CSS____BlockElementModifier
+[submodule "quizApp"]
+	path = quizApp
+	url = git@github.com:webdev-archist/PROJECTS__Quizes.git
